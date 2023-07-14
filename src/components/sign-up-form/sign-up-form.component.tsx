@@ -34,13 +34,18 @@ const SignUpForm = () => {
     }
 
     try {
-      const { user }: any = await createAuthUserWithEmailAndPassword(
+      const authResult = await createAuthUserWithEmailAndPassword(
         email,
         password
       );
 
-      await createUserDocumentFromAuth(user, { displayName });
-      resetFormFields();
+      if (authResult && authResult.user) {
+        const { user } = authResult;
+        await createUserDocumentFromAuth(user, { displayName });
+        resetFormFields();
+      } else {
+        alert("Sign up failed");
+      }
     } catch (error: any) {
       if (error.code === "auth/email-already-in-use") {
         alert("Cannot create user, email already in use");
