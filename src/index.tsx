@@ -7,17 +7,26 @@ import "./index.scss";
 import App from "./App";
 import { UserProvider } from "./contexts/user.context";
 
+import { ProductsProvider } from "./contexts/product.context";
+
+import { CartProvider } from "./contexts/cart.context";
+
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <UserProvider>
-        <App />
-      </UserProvider>
+      <ProductsProvider>
+        <UserProvider>
+          <CartProvider>
+            <App />
+          </CartProvider>
+        </UserProvider>
+      </ProductsProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

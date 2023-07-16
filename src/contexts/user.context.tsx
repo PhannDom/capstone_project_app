@@ -14,9 +14,13 @@ const defaultState = {
   currentUser: null,
 };
 
+type AuthProviderProps = {
+  children: React.ReactNode;
+};
+
 export const UserContext = createContext<IUserContext>(defaultState);
 
-export const UserProvider = ({ children }: any) => {
+export const UserProvider = (props: AuthProviderProps) => {
   const [currentUser, setCurrentUser] = useState(defaultState.currentUser);
 
   const updateCurrentUser = (user: any) => {
@@ -36,5 +40,7 @@ export const UserProvider = ({ children }: any) => {
     return unsubscribe;
   }, []);
 
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={value}>{props.children}</UserContext.Provider>
+  );
 };
