@@ -1,10 +1,10 @@
 import CategoryItem from "../category-item/category-item.component";
-import { Category } from "../../models";
+import { CategoryType } from "../../models";
 
 import "./directory.styles.scss";
 
 type Props = {
-  categories: Category[];
+  categories: CategoryType[];
 };
 
 const Directory = (props: Props) => {
@@ -12,7 +12,7 @@ const Directory = (props: Props) => {
 
   return (
     <div className="directory-container">
-      {categories.map((category: Category) => (
+      {categories.map((category: CategoryType) => (
         <CategoryItem key={category.id} category={category} />
       ))}
     </div>

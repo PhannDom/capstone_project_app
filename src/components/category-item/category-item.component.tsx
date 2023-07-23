@@ -1,8 +1,8 @@
-import { Category } from "../../models";
+import { CategoryType } from "../../models";
 import "./category-item.styles.scss";
 
 type Props = {
-  category: Category;
+  category: CategoryType;
 };
 
 const CategoryItem = (props: Props) => {

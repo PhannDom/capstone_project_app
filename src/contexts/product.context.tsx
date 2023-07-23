@@ -1,10 +1,10 @@
 import { createContext, useState } from "react";
 
 import PRODUCTS from "../shop.data.json";
-import { Product } from "models";
+import { ProductType } from "models";
 
 type ProductContextType = {
-  products: Product[];
+  products: ProductType[];
 };
 
 type ProductsProviderProps = {
@@ -16,7 +16,7 @@ export const ProductsContext = createContext<ProductContextType>({
 });
 
 // Convert the 'id' property to string during import
-const convertedProducts: Product[] = PRODUCTS.map((product) => ({
+const convertedProducts: ProductType[] = PRODUCTS.map((product) => ({
   ...product,
   id: String(product.id), // Convert the 'id' property to string
 }));
@@ -24,7 +24,7 @@ const convertedProducts: Product[] = PRODUCTS.map((product) => ({
 export const ProductsProvider = (props: ProductsProviderProps) => {
   const { children } = props;
 
-  const [products, setProducts] = useState<Product[]>(convertedProducts);
+  const [products, setProducts] = useState<ProductType[]>(convertedProducts);
 
   const value: ProductContextType = { products };
 
