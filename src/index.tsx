@@ -7,9 +7,11 @@ import "./index.scss";
 import App from "./App";
 import { UserProvider } from "./contexts/user.context";
 
-import { ProductsProvider } from "./contexts/product.context";
+import { ProductsProvider } from "./contexts/categories.context";
 
 import { CartProvider } from "./contexts/cart.context";
+
+import { StyledEngineProvider, CssVarsProvider } from "@mui/joy/styles";
 
 import reportWebVitals from "./reportWebVitals";
 
@@ -19,15 +21,19 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <ProductsProvider>
-        <UserProvider>
-          <CartProvider>
-            <App />
-          </CartProvider>
-        </UserProvider>
-      </ProductsProvider>
-    </BrowserRouter>
+    <StyledEngineProvider injectFirst>
+      <CssVarsProvider>
+        <BrowserRouter>
+          <ProductsProvider>
+            <UserProvider>
+              <CartProvider>
+                <App />
+              </CartProvider>
+            </UserProvider>
+          </ProductsProvider>
+        </BrowserRouter>
+      </CssVarsProvider>
+    </StyledEngineProvider>
   </React.StrictMode>
 );
 

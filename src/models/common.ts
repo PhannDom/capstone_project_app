@@ -2,6 +2,7 @@ export type CategoryType = {
   id: string;
   title: string;
   imageUrl: string;
+  route: string;
 };
 
 export type ProductType = {
@@ -17,4 +18,9 @@ export type CartItemType = {
   imageUrl: string;
   price: number;
   quantity: number;
+};
+
+export type ShopDataType = {
+  title: string;
+  items: ProductType[];
 };

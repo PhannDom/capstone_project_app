@@ -9,7 +9,17 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  writeBatch,
+  query,
+  getDocs,
+} from "firebase/firestore";
+import { ProductType, ShopDataType } from "models";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDYu3gfHfpckdig70QxtpkHtNQv-2pVyyw",
@@ -37,6 +47,44 @@ export const signInWithGoogleRedirect = () =>
   signInWithRedirect(auth, googleProvider);
 
 export const db = getFirestore();
+
+export const addCollectionAndDocuments = async (
+  collectionKey: string,
+  objectToAdd: ShopDataType[]
+) => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+
+  objectToAdd.forEach((object) => {
+    const docRef = doc(collectionRef, object.title.toLowerCase());
+    batch.set(docRef, object);
+  });
+
+  await batch.commit();
+};
+
+export const getCategoriesAndDocuments = async (): Promise<{
+  [key: string]: ProductType[];
+}> => {
+  const collectionRef = collection(db, "categories");
+
+  const q = query(collectionRef);
+
+  const querySnapshot = await getDocs(q);
+
+  const categoryMap: { [key: string]: ProductType[] } =
+    querySnapshot.docs.reduce(
+      (acc: { [key: string]: ProductType[] }, docSnapshot) => {
+        const { title, items }: ShopDataType =
+          docSnapshot.data() as ShopDataType;
+        acc[title.toLowerCase()] = items;
+        return acc;
+      },
+      {}
+    );
+
+  return categoryMap;
+};
 
 export const createUserDocumentFromAuth = async (
   userAuth: any,

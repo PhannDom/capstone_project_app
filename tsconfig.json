@@ -21,7 +21,8 @@
     "jsx": "react-jsx",
     "baseUrl":"src",
     "paths": {
-      "@src/*": ["src/*"]
+      "@src/*": ["src/*"],
+      "@mui/material": ["./node_modules/@mui/joy"]
     }
   },
   "include": [
